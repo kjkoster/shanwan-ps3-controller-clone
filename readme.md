@@ -1,10 +1,11 @@
 # Python code for ShanWan PS3-style Controller
 
-When I got my Waveshare Jetbot with Nvidia Jets Nano, I received one of those
-crappy ShanWan PS3 controller clones with it. The demo code had me connect the
-controller to my laptop and would relay the control signals to the robot. While
-that is a nice demonstration of teleoperation, I'd much rather just plug the
-controller into the Jetbot and control it directly.
+When I got my [Waveshare Jetbot](https://www.waveshare.com/wiki/JetBot_AI_Kit)
+with Nvidia Jets Nano, I received one of those crappy ShanWan PS3 controller
+clones with it. The demo code had me connect the controller to my laptop and
+would relay the control signals to the robot. While that is a nice demonstration
+of teleoperation, I'd much rather just plug the controller into the Jetbot and
+control it directly.
 
 The controller is not well supported, so I had to write my own code to be able
 to use it from my Jetbot. This repository contains the code that I wrote to
@@ -35,19 +36,24 @@ With that under my belt, I found [Alex Lugo](https://github.com/alugocp)'s
 videos on Python USB quite useful as a starting point. I had to add my own error
 handling, though.
 
+## Testing Controller Actions
+
+To just test the controller, I wrote a small program that prints out what
+buttons are pressed.
+
+```shell
+$ pip3 install pyusb
+$ sudo python3 game-controller.py
+```
+
 A neat trick is to enable the debug traces of `PYUSB_DEBUG` and `LIBUSB_DEBUG`
 using the environment variable. This will give you heaps to tracing information.
 Note the ordering in the example below. The environment variables for the
 command are set _after_ the `sudo` and not before.
 
+```shell
+$ sudo PYUSB_DEBUG=debug LIBUSB_DEBUG=4 python3 game-controller.py
 ```
-sudo PYUSB_DEBUG=debug LIBUSB_DEBUG=4 python3 game-controller.py
-```
-
-## Controller Output
-
-To just test the controller, I wrote a small program that prints out what
-buttons are pressed.
 
 ## Known Issues
 
@@ -65,9 +71,9 @@ Operation timed out`. Writing to endpoint `0x02` also gives me the error `[Errno
 110] Operation timed out`. I have not tried control transfer requests yet.
 
 Triggers 2 should be force-sensitive, but they are not. Inside the device, they
-are just the same press buttons as all the others. In the USB messages, they do
-report 255 as the force, but there is no force detection hardware, so this is
-just the fixed force value.
+are just the same push buttons as all the others. In the USB messages, they do
+report 255 as the force. Since there is no actual force detection hardware that
+value is just the fixed force value.
 
 The Linux kernel does not show this controller as a supported USB device. If I
 knew what driver to specify for this device, I could send an upstream patch.

@@ -55,6 +55,14 @@ command are set _after_ the `sudo` and not before.
 $ sudo PYUSB_DEBUG=debug LIBUSB_DEBUG=4 python3 game-controller.py
 ```
 
+## Controlling the Jetbot
+
+The notebook `remote_controlled.ipynb` is intended to be run in the context of
+the demo notebooks on the Jetbot, so that all dependencies have been met
+already. To run this notebook, copy it onto the Jetbot into
+`/home/jetbot/jetbot/notebooks/teleoperation`. Then open using Jupyter lab as
+usual.
+
 ## Known Issues
 
 The Y-axis of the left joystick influences the X-axis value of the right
@@ -79,5 +87,6 @@ The Linux kernel does not show this controller as a supported USB device. If I
 knew what driver to specify for this device, I could send an upstream patch.
 
 The controller seems to lose connection to its dongle a lot. That may be because
-I am running it off of rechargeable batteries.
+I am running it off of rechargeable batteries. It can also be because my
+notebook polls the endpoint to slowly. Not sure.
 
